@@ -1,0 +1,7 @@
+<!-- src/app/components/contact-details/contact-details.component.html -->
+<h2>{{ contact?.firstName }} {{ contact?.lastName }}</h2>
+<p>Phone: {{ contact?.phoneNumber }}</p>
+<p>Email: {{ contact?.email }}</p>
+<p>Birth Date: {{ contact?.birthDate | date }}</p>
+<p>Address: {{ contact?.address }}</p>
+<a [routerLink]="['/contacts', contact?.id, 'edit']">Edit Contact</a>

@@ -1,0 +1,61 @@
+<div
+  style="
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+  "
+>
+  <input
+    type="text"
+    [(ngModel)]="searchTerm"
+    (input)="searchContacts()"
+    placeholder="Search contacts..."
+  />
+  <ul>
+    <li
+      *ngFor="let contact of contacts"
+      style="
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        text-decoration: none;
+      "
+    >
+      <a [routerLink]="['/contacts', contact.id]">
+        {{ contact.firstName }} {{ contact.lastName }} -
+        {{ contact.phoneNumber }}
+      </a>
+      <button
+        (click)="editContact(contact.id)"
+        style="
+          padding: 10px 20px;
+          background-color: rgb(63, 86, 232);
+          color: white;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          margin: 10px;
+        "
+      >
+        Edit
+      </button>
+      <button
+        (click)="deleteContact(contact.id)"
+        style="
+          padding: 10px 20px;
+          background-color: rgb(232, 63, 63);
+          color: white;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          margin: 10px;
+        "
+      >
+        Delete
+      </button>
+    </li>
+  </ul>
+  <a [routerLink]="['/contacts/add']">Add New Contact</a>
+</div>
