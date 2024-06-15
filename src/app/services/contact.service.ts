@@ -8,7 +8,10 @@ export class ContactService {
   private storageKey = 'contacts';
 
   constructor() {
-    if (localStorage.getItem(this.storageKey)) {
+    if (
+      this.isLocalStorageAvailable() &&
+      localStorage.getItem(this.storageKey)
+    ) {
       const initialContacts: Contact[] = [
         {
           id: 1,
@@ -43,8 +46,11 @@ export class ContactService {
   }
 
   getContacts(): Contact[] {
-    const contactsString = localStorage.getItem(this.storageKey);
-    return contactsString ? JSON.parse(contactsString, this.dateReviver) : [];
+    if (this.isLocalStorageAvailable()) {
+      const contactsString = localStorage.getItem(this.storageKey);
+      return contactsString ? JSON.parse(contactsString, this.dateReviver) : [];
+    }
+    return [];
   }
 
   getContactById(id: number): Contact | undefined {
@@ -52,27 +58,45 @@ export class ContactService {
   }
 
   addContact(contact: Contact): void {
-    const contacts = this.getContacts();
-    contacts.push(contact);
-    localStorage.setItem(this.storageKey, JSON.stringify(contacts));
-  }
-
-  updateContact(contact: Contact): void {
-    const contacts = this.getContacts();
-    const index = contacts.findIndex((c) => c.id === contact.id);
-    if (index !== -1) {
-      contacts[index] = contact;
+    if (this.isLocalStorageAvailable()) {
+      const contacts = this.getContacts();
+      contacts.push(contact);
       localStorage.setItem(this.storageKey, JSON.stringify(contacts));
     }
   }
 
-  deleteContact(id: number): void {
-    const contacts = this.getContacts();
-    const updatedContacts = contacts.filter((contact) => contact.id !== id);
-    localStorage.setItem(this.storageKey, JSON.stringify(updatedContacts));
+  updateContact(contact: Contact): void {
+    if (this.isLocalStorageAvailable()) {
+      const contacts = this.getContacts();
+      const index = contacts.findIndex((c) => c.id === contact.id);
+      if (index !== -1) {
+        contacts[index] = contact;
+        localStorage.setItem(this.storageKey, JSON.stringify(contacts));
+      }
+    }
   }
 
-  // Helper function to convert date string to Date object using regular expression
+  deleteContact(id: number): void {
+    if (this.isLocalStorageAvailable()) {
+      const contacts = this.getContacts();
+      const updatedContacts = contacts.filter((contact) => contact.id !== id);
+      localStorage.setItem(this.storageKey, JSON.stringify(updatedContacts));
+    }
+  }
+
+  // Helper function to check if localStorage is available
+  private isLocalStorageAvailable(): boolean {
+    try {
+      const test = 'test';
+      localStorage.setItem(test, test);
+      localStorage.removeItem(test);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  // Helper function to convert date string to Date object
   private convertToDate(dateString: string): Date {
     const dateParts = dateString.split('-').map(Number);
     return new Date(dateParts[0], dateParts[1] - 1, dateParts[2]);

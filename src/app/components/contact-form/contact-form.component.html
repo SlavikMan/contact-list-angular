@@ -1,22 +1,24 @@
-<!-- src/app/components/contact-form/contact-form.component.html -->
-<form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
-  <label for="firstName">First Name:</label>
-  <input id="firstName" formControlName="firstName" />
+<form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="form">
+  <div class="row">
+    <label class="label" for="firstName">First Name:</label>
+    <input class="input" id="firstName" formControlName="firstName" />
 
-  <label for="lastName">Last Name:</label>
-  <input id="lastName" formControlName="lastName" />
+    <label class="label" for="lastName">Last Name:</label>
+    <input class="input" id="lastName" formControlName="lastName" />
+  </div>
+  <div class="row">
+    <label class="label" for="phoneNumber">Phone Number:</label>
+    <input class="input" id="phoneNumber" formControlName="phoneNumber" />
 
-  <label for="phoneNumber">Phone Number:</label>
-  <input id="phoneNumber" formControlName="phoneNumber" />
+    <label class="label" for="email">Email:</label>
+    <input class="input" id="email" formControlName="email" />
+  </div>
 
-  <label for="email">Email:</label>
-  <input id="email" formControlName="email" />
+  <label class="label" for="birthDate">Birth Date:</label>
+  <input class="input" id="birthDate" type="date" formControlName="birthDate" />
 
-  <label for="birthDate">Birth Date:</label>
-  <input id="birthDate" type="date" formControlName="birthDate" />
+  <label class="label" for="address">Address:</label>
+  <textarea class="textarea" id="address" formControlName="address"></textarea>
 
-  <label for="address">Address:</label>
-  <textarea id="address" formControlName="address"></textarea>
-
-  <button type="submit">Save</button>
+  <button class="button" type="submit">Save</button>
 </form>

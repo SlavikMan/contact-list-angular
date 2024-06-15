@@ -7,10 +7,15 @@
 }
 
 body {
-  background-image: url("/public/backG.jpg");
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100vh;
   color: white;
+  background-color: rgb(157, 164, 165);
+}
+
+.container {
+  background-color: rgb(66, 140, 133);
+  border-radius: 5px;
 }
